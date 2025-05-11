@@ -1,4 +1,4 @@
-# Full Stack RSVP App
+# Full Stack Wedding RSVP App
 
 ![App Preview](./images/yee987.png)
 

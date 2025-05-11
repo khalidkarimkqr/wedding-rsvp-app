@@ -40,24 +40,33 @@ const RSVPForm = () => {
     const result = await submitRSVP(formData);
 
     if (result.success) {
-      toast("Success", {
-        description: strings.thankYouMessage,
-      });
-      setName("");
-      setEmail("");
-      setAccompany(null);
-      setAttendance("yes");
-      setErrors({});
+        toast("Success", {
+            description: (
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                     {strings.thankYouMessage}
+                </span>
+             ),
+            });
+            setName("");
+            setEmail("");
+            setAccompany(null);
+            setAttendance("yes");
+            setErrors({});
     } else {
-      toast("Error", {
-        description: result.message,
-      });
-      if (result.error?.code === "23505") {
-        setErrors({ email: "You already responded!" });
-      }
+    toast("Error", {
+        description: (
+        <span className="text-sm text-gray-700 dark:text-gray-300">
+            {result.message}
+        </span>
+        ),
+     });
+    if (result.error?.code === "23505") {
+     setErrors({ email: "You already responded!" });
+        }
     }
     setIsLoading(false);
-  };
+};
+
 
   const openGoogleMaps = () => {
     const encodedLocation = encodeURIComponent(strings.eventLocation);
@@ -149,9 +158,19 @@ const RSVPForm = () => {
           </RadioGroup>
         </div>
 
-        <Button disabled={isLoading} type="submit" className="mt-2">
-          {isLoading ? "Sending..." : strings.submitButton}
-        </Button>
+        <Button
+  type="submit"
+  variant="outline"
+  disabled={isLoading}
+  className={`mt-2 w-full transition-colors duration-200 ${
+    isLoading
+      ? "cursor-not-allowed bg-gray-300 text-gray-600"
+      : "cursor-pointer hover:bg-black hover:text-white"
+  }`}
+>
+  {isLoading ? "Sending..." : strings.submitButton}
+</Button>
+
       </form>
     </div>
   );

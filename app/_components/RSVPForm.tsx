@@ -21,9 +21,51 @@ const RSVPForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 //   const {  } = Toaster();
 
-  const handleSubmit = () => {
-    console.log("submit ....")
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name) {
+      setErrors({ name: "Name is required" });
+      return;
+    }
+    if (!email) {
+      setErrors({ email: "Email is required" });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("accompany", accompany || "0");
+    formData.append("attendance", attendance);
+
+    setIsLoading(true);
+    const result = await submitRSVP(formData);
+
+    if (result.success) {
+      toast({
+        title: "Success",
+        description: strings.thankYouMessage,
+      });
+      // Reset form
+      setName("");
+      setEmail("");
+      setAccompany(null);
+      setAttendance("yes");
+      setErrors({});
+    } else {
+      toast({
+        title: "Error",
+        description: result.message,
+        variant: "destructive",
+      });
+      if (result.error) {
+        if (result.error.code === "23505") {
+          setErrors({ email: "Email already exists" });
+        }
+      }
+    }
+    setIsLoading(false);
+  };
   
 
   const openGoogleMaps = () => {

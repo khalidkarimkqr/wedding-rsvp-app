@@ -1,5 +1,7 @@
 # Full Stack RSVP App
 
+![App Preview](.images/yee987.png)
+
 ## Technologies used
 
 - [Next.js](https://nextjs.org/)

@@ -1,5 +1,5 @@
 import { getRSVPs } from "@/app/actions/getRSVPs";
-import { signOut } from "@/app/actions/auth";
+// import { signOut } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { RSVPTable } from "@/app/_components/RSVPTable";
 import { House } from "lucide-react";

@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
-// import { Toaster } from "@/components/ui/sonner";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Toaster } from "@/components/ui/sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { strings } from "@/app/utils/strings";
-// import { submitRSVP } from "../actions/submitRSVP";
+import { submitRSVP } from "../actions/submitRSVP";
 
+import { toast } from "sonner";
 
 const RSVPForm = () => {
   const [name, setName] = useState("");
@@ -42,10 +44,9 @@ const RSVPForm = () => {
     const result = await submitRSVP(formData);
 
     if (result.success) {
-      toast({
-        title: "Success",
-        description: strings.thankYouMessage,
-      });
+      toast("Success", {
+  description: strings.thankYouMessage,
+});
       // Reset form
       setName("");
       setEmail("");
@@ -53,11 +54,9 @@ const RSVPForm = () => {
       setAttendance("yes");
       setErrors({});
     } else {
-      toast({
-        title: "Error",
-        description: result.message,
-        variant: "destructive",
-      });
+      toast("Error", {
+  description: result.message,
+});
       if (result.error) {
         if (result.error.code === "23505") {
           setErrors({ email: "Email already exists" });

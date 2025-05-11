@@ -17,13 +17,13 @@ export default async function RSVPsPage() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">All RSVPs</h1>
         <div className="flex items-center gap-2">
-          <Link href="/">
-            <Button variant="outline">
+          <Link href={"/"}>
+            <Button variant={"outline"}>
               <House />
             </Button>
           </Link>
           <form action={signOut}>
-            <Button variant="outline" type="submit">
+            <Button variant={"outline"}>
               Sign Out
             </Button>
           </form>

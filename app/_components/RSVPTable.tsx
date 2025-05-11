@@ -19,9 +19,9 @@ interface RSVP {
   attendance: string;
 }
 
-// interface RSVPTableProps {
-//   data: RSVP[];
-// }
+interface RSVPTableProps {
+  data: RSVP[];
+}
 
 export function RSVPTable({ data }: RSVPTableProps) {
   const [filter, setFilter] = React.useState("");

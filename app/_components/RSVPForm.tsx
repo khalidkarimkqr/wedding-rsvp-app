@@ -6,12 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Toaster } from "@/components/ui/sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { strings } from "@/app/utils/strings";
 import { submitRSVP } from "../actions/submitRSVP";
-
 import { toast } from "sonner";
 
 const RSVPForm = () => {
@@ -21,7 +18,6 @@ const RSVPForm = () => {
   const [attendance, setAttendance] = useState("yes");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
-//   const {  } = Toaster();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,9 +41,8 @@ const RSVPForm = () => {
 
     if (result.success) {
       toast("Success", {
-  description: strings.thankYouMessage,
-});
-      // Reset form
+        description: strings.thankYouMessage,
+      });
       setName("");
       setEmail("");
       setAccompany(null);
@@ -55,17 +50,14 @@ const RSVPForm = () => {
       setErrors({});
     } else {
       toast("Error", {
-  description: result.message,
-});
-      if (result.error) {
-        if (result.error.code === "23505") {
-          setErrors({ email: "Email already exists" });
-        }
+        description: result.message,
+      });
+      if (result.error?.code === "23505") {
+        setErrors({ email: "You already responded!" });
       }
     }
     setIsLoading(false);
   };
-  
 
   const openGoogleMaps = () => {
     const encodedLocation = encodeURIComponent(strings.eventLocation);
@@ -76,11 +68,12 @@ const RSVPForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto my-10">
-      <h1 className="text-2xl font-bold mb-4">{strings.title}</h1>
-      <p className="mb-6">{strings.description}</p>
+    <div className="max-w-md mx-auto my-10 font-sans">
+      <h1 className="text-3xl font-bold mb-2">{strings.title}</h1>
+      <p className="mb-6 text-gray-600">{strings.description}</p>
+
       <div className="mb-6">
-        <Label>{strings.eventDateLabel}</Label>
+        <Label className="mb-2 block">{strings.eventDateLabel}</Label>
         <Calendar
           mode="single"
           selected={new Date(strings.eventDate)}
@@ -102,8 +95,9 @@ const RSVPForm = () => {
           </Button>
         </div>
       </div>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-y-5">
+        <div className="flex flex-col gap-y-1">
           <Label htmlFor="name">{strings.nameLabel}</Label>
           <Input
             id="name"
@@ -111,12 +105,12 @@ const RSVPForm = () => {
             onChange={(e) => setName(e.target.value)}
             required
           />
-          {/* Show error message if there is one */}
           {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            <p className="text-red-500 text-sm">{errors.name}</p>
           )}
         </div>
-        <div>
+
+        <div className="flex flex-col gap-y-1">
           <Label htmlFor="email">{strings.emailLabel}</Label>
           <Input
             id="email"
@@ -125,12 +119,12 @@ const RSVPForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {/* Error message if there is one */}
           {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            <p className="text-red-500 text-sm">{errors.email}</p>
           )}
         </div>
-        <div>
+
+        <div className="flex flex-col gap-y-1">
           <Label htmlFor="accompany">{strings.accompanyLabel}</Label>
           <Input
             id="accompany"
@@ -140,7 +134,8 @@ const RSVPForm = () => {
             onChange={(e) => setAccompany(e.target.value)}
           />
         </div>
-        <div>
+
+        <div className="flex flex-col gap-y-2">
           <Label>{strings.rsvpLabel}</Label>
           <RadioGroup value={attendance} onValueChange={setAttendance}>
             <div className="flex items-center space-x-2">
@@ -153,12 +148,13 @@ const RSVPForm = () => {
             </div>
           </RadioGroup>
         </div>
-        <Button disabled={isLoading} type="submit">
+
+        <Button disabled={isLoading} type="submit" className="mt-2">
           {isLoading ? "Sending..." : strings.submitButton}
         </Button>
       </form>
     </div>
   );
-}
+};
 
-export default RSVPForm
+export default RSVPForm;
